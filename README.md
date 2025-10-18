@@ -1,6 +1,6 @@
 <h1>ExpNo 8 : Solve Cryptarithmetic Problem,a CSP(Constraint Satisfaction Problem) using Python</h1> 
-<h3>Name:               </h3>
-<h3>Register Number/Staff Id:       </h3>
+<h3>Name:  Jebin Raj J
+<h3>Register Number/Staff Id:  212224030012
 <H3>Aim:</H3>
 <p>
     To solve Cryptarithmetic Problem,a CSP(Constraint Satisfaction Problem) using Python
@@ -75,6 +75,46 @@ End<br>
 <h2>Sample Input and Output:</h2>
 SEND = 9567<br>
 MORE = 1085<br>
+# Exp No 8: Solve Cryptarithmetic Problem using Python
+
+from itertools import permutations
+
+# Function to solve the cryptarithmetic problem
+def solve_cryptarithmetic(word1, word2, result):
+    # Get unique letters
+    letters = set(word1 + word2 + result)
+    if len(letters) > 10:
+        print("Too many unique letters, solution impossible!")
+        return
+    
+    letters = list(letters)
+    
+    # Generate all possible digit assignments
+    for perm in permutations(range(10), len(letters)):
+        mapping = dict(zip(letters, perm))
+        
+        # Skip if any word starts with 0
+        if mapping[word1[0]] == 0 or mapping[word2[0]] == 0 or mapping[result[0]] == 0:
+            continue
+        
+        # Convert words to numbers using the mapping
+        num1 = sum(mapping[ch] * (10 ** i) for i, ch in enumerate(word1[::-1]))
+        num2 = sum(mapping[ch] * (10 ** i) for i, ch in enumerate(word2[::-1]))
+        num3 = sum(mapping[ch] * (10 ** i) for i, ch in enumerate(result[::-1]))
+        
+        if num1 + num2 == num3:
+            print(f"{word1} = {num1}")
+            print(f"{word2} = {num2}")
+            print(f"{result} = {num3}")
+            print(f"Letter mapping: {mapping}")
+            return mapping
+    
+    print("No solution found")
+    return None
+
+# Example: SEND + MORE = MONEY
+solve_cryptarithmetic("SEND", "MORE", "MONEY")
+
 <hr>
 MONEY = 10652<br>
 <hr>
